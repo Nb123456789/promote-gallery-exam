@@ -60,6 +60,7 @@ class Gallery extends React.Component {
   addImage(image) {
     this.setState({images: this.state.images.concat([image.props.dto])})
   }
+  
 
   render() {
     return (
