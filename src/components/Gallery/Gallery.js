@@ -15,6 +15,7 @@ class Gallery extends React.Component {
       images: [],
       galleryWidth: this.getGalleryWidth()
     };
+    this.addImage = this.addImage.bind(this)
   }
 
   getGalleryWidth(){
@@ -56,11 +57,15 @@ class Gallery extends React.Component {
     this.getImages(props.tag);
   }
 
+  addImage(image) {
+    this.setState({images: this.state.images.concat([image.props.dto])})
+  }
+
   render() {
     return (
       <div className="gallery-root">
-        {this.state.images.map(dto => {
-          return <Image key={'image-' + dto.id} dto={dto} galleryWidth={this.state.galleryWidth}/>;
+        {this.state.images.map((dto, index) => {
+          return <Image key={'image-' + index} dto={dto} galleryWidth={this.state.galleryWidth} addImageHandler={this.addImage} />;
         })}
       </div>
     );

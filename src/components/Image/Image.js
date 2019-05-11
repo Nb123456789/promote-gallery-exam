@@ -12,6 +12,8 @@ class Image extends React.Component {
   constructor(props) {
     super(props);
     this.calcImageSize = this.calcImageSize.bind(this);
+    this.clickHandler = this.clickHandler.bind(this);
+
     this.state = {
       size: 200
     };
@@ -35,6 +37,10 @@ class Image extends React.Component {
     return `https://farm${dto.farm}.staticflickr.com/${dto.server}/${dto.id}_${dto.secret}.jpg`;
   }
 
+  clickHandler() {
+    this.props.addImageHandler(this)
+  }
+
   render() {
     return (
       <div
@@ -46,9 +52,9 @@ class Image extends React.Component {
         }}
         >
         <div>
-          <FontAwesome className="image-icon" name="clone" title="clone"/>
-          <FontAwesome className="image-icon" name="filter" title="filter"/>
-          <FontAwesome className="image-icon" name="expand" title="expand"/>
+          <FontAwesome className="image-icon" name="clone" title="clone" onClick={this.clickHandler} />
+          <FontAwesome className="image-icon" name="filter" title="filter" />
+          <FontAwesome className="image-icon" name="expand" title="expand" />
         </div>
       </div>
     );
