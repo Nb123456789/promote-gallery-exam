@@ -10,7 +10,7 @@ class Image extends React.Component {
   };
 
   static filters = [
-    'blur(5px)',
+    'saturate(100%)',
     'contrast(200%)',
     'grayscale(80%)',
     'hue-rotate(90deg)',
@@ -22,10 +22,12 @@ class Image extends React.Component {
     this.calcImageSize = this.calcImageSize.bind(this);
     this.cloneHandler = this.cloneHandler.bind(this);
     this.filterHandler = this.filterHandler.bind(this);
+    this.sizeHandler = this.sizeHandler.bind(this);
 
     this.state = {
       size: 200,
       filter: '',
+      isOpen: false
     };
   }
 
@@ -54,6 +56,18 @@ class Image extends React.Component {
     this.setState({filter: Image.filters[Math.floor(Math.random()*Image.filters.length)]})
   }
 
+  sizeHandler(){
+    if ((!this.state.isOpen)) {
+      this.setState({size : this.state.size * 2});
+    }
+    else {
+      this.setState({size: 181.25});
+    }
+    this.setState({isOpen:!this.state.isOpen })
+  }
+
+
+
   render() {
     return (
       <div
@@ -68,7 +82,7 @@ class Image extends React.Component {
         <div>
           <FontAwesome className="image-icon" name="clone" title="clone" onClick={this.cloneHandler} />
           <FontAwesome className="image-icon" name="filter" title="filter" onClick={this.filterHandler} />
-          <FontAwesome className="image-icon" name="expand" title="expand" />
+          <FontAwesome className="image-icon" name="expand" title="expand" onClick={this.sizeHandler}/>
         </div>
       </div>
     );
