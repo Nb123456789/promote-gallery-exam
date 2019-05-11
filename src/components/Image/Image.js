@@ -9,13 +9,23 @@ class Image extends React.Component {
     galleryWidth: PropTypes.number
   };
 
+  static filters = [
+    'blur(5px)',
+    'contrast(200%)',
+    'grayscale(80%)',
+    'hue-rotate(90deg)',
+    'drop-shadow(16px 16px 20px red) invert(75%)'
+  ]
+
   constructor(props) {
     super(props);
     this.calcImageSize = this.calcImageSize.bind(this);
-    this.clickHandler = this.clickHandler.bind(this);
+    this.cloneHandler = this.cloneHandler.bind(this);
+    this.filterHandler = this.filterHandler.bind(this);
 
     this.state = {
-      size: 200
+      size: 200,
+      filter: '',
     };
   }
 
@@ -37,8 +47,11 @@ class Image extends React.Component {
     return `https://farm${dto.farm}.staticflickr.com/${dto.server}/${dto.id}_${dto.secret}.jpg`;
   }
 
-  clickHandler() {
+  cloneHandler() {
     this.props.addImageHandler(this)
+  }
+  filterHandler() {
+    this.setState({filter: Image.filters[Math.floor(Math.random()*Image.filters.length)]})
   }
 
   render() {
@@ -48,12 +61,13 @@ class Image extends React.Component {
         style={{
           backgroundImage: `url(${this.urlFromDto(this.props.dto)})`,
           width: this.state.size + 'px',
-          height: this.state.size + 'px'
+          height: this.state.size + 'px',
+          filter: this.state.filter
         }}
         >
         <div>
-          <FontAwesome className="image-icon" name="clone" title="clone" onClick={this.clickHandler} />
-          <FontAwesome className="image-icon" name="filter" title="filter" />
+          <FontAwesome className="image-icon" name="clone" title="clone" onClick={this.cloneHandler} />
+          <FontAwesome className="image-icon" name="filter" title="filter" onClick={this.filterHandler} />
           <FontAwesome className="image-icon" name="expand" title="expand" />
         </div>
       </div>
